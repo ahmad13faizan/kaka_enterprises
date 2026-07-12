@@ -1,0 +1,20 @@
+{
+  "name": "agency/site-visit",
+  "description": "Site Visit module for Bagisto - allows customers to request in-person product demos",
+  "type": "bagisto-package",
+  "license": "MIT",
+  "require": {},
+  "autoload": {
+    "psr-4": {
+      "Agency\\SiteVisit\\": "src/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Agency\\SiteVisit\\Providers\\SiteVisitServiceProvider",
+        "Agency\\SiteVisit\\Providers\\ModuleServiceProvider"
+      ]
+    }
+  }
+}

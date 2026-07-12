@@ -1,0 +1,20 @@
+{
+  "name": "agency/product-sample",
+  "description": "Product Samples module for Bagisto - sample request and inventory management",
+  "type": "bagisto-package",
+  "license": "MIT",
+  "require": {},
+  "autoload": {
+    "psr-4": {
+      "Agency\\ProductSample\\": "src/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Agency\\ProductSample\\Providers\\ProductSampleServiceProvider",
+        "Agency\\ProductSample\\Providers\\ModuleServiceProvider"
+      ]
+    }
+  }
+}

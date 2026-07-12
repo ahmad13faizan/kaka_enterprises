@@ -1,0 +1,19 @@
+{
+    "name": "agency/b2b-fields",
+    "description": "Adds GST number and B2B fields to customer accounts in Bagisto",
+    "type": "bagisto-package",
+    "license": "MIT",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Agency\\B2BFields\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Agency\\B2BFields\\Providers\\B2BFieldsServiceProvider"
+            ]
+        }
+    }
+}
