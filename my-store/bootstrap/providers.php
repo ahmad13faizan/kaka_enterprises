@@ -86,6 +86,7 @@ return [
     \Agency\SiteVisit\Providers\SiteVisitServiceProvider::class,
     \Agency\ProductSample\Providers\ProductSampleServiceProvider::class,
     \Agency\B2BFields\Providers\B2BFieldsServiceProvider::class,
+    \Agency\Razorpay\Providers\RazorpayServiceProvider::class,
 
     /**
      * B2B Suite — must be last (order matters, no auto-discovery).

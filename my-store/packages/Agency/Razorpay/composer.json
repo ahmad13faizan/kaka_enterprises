@@ -1,0 +1,21 @@
+{
+    "name": "agency/razorpay",
+    "description": "Razorpay payment gateway for Bagisto - UPI, cards, netbanking and wallets",
+    "type": "bagisto-package",
+    "license": "MIT",
+    "require": {
+        "razorpay/razorpay": "^2.9"
+    },
+    "autoload": {
+        "psr-4": {
+            "Agency\\Razorpay\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Agency\\Razorpay\\Providers\\RazorpayServiceProvider"
+            ]
+        }
+    }
+}

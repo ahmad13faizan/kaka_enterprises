@@ -17,5 +17,5 @@ Route::group([
 
     // Sample Inventory
     Route::get('/sample-inventory', [SampleInventoryController::class, 'index'])->name('admin.sample-inventory.index');
-    Route::post('/sample-inventory/{productId}', [SampleInventoryController::class, 'update'])->name('admin.sample-inventory.update');
+    Route::put('/sample-inventory/{productId}', [SampleInventoryController::class, 'update'])->name('admin.sample-inventory.update');
 });

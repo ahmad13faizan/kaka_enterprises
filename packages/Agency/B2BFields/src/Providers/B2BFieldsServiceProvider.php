@@ -33,11 +33,19 @@ class B2BFieldsServiceProvider extends ServiceProvider
         // Create form (modal)
         Event::listen('bagisto.admin.customers.create.after', function ($viewRenderEventManager) {
             $viewRenderEventManager->addTemplate('b2b-fields::admin.gst-field-create');
+            $viewRenderEventManager->addTemplate('b2b-fields::admin.sales-rep-edit');
         });
 
         // Edit form
         Event::listen('bagisto.admin.customers.customers.view.edit.after', function ($viewRenderEventManager) {
             $viewRenderEventManager->addTemplate('b2b-fields::admin.gst-field-edit');
+            $viewRenderEventManager->addTemplate('b2b-fields::admin.sales-rep-edit');
+        });
+
+        // View (detail) page — read-only GST + sales rep display
+        Event::listen('bagisto.admin.customers.customers.view.card.accordion.customer.after', function ($viewRenderEventManager) {
+            $viewRenderEventManager->addTemplate('b2b-fields::admin.gst-field-view');
+            $viewRenderEventManager->addTemplate('b2b-fields::admin.sales-rep-view');
         });
     }
 
@@ -90,13 +98,27 @@ class B2BFieldsServiceProvider extends ServiceProvider
      */
     protected function saveGst(Customer $customer): void
     {
-        if (! request()->has('gst_number')) {
+        if (request()->has('gst_number')) {
+            $gst = request('gst_number');
+            $customer->gst_number = $gst ? strtoupper($gst) : null;
+            $customer->save();
+        }
+
+        $this->saveSalesRep($customer);
+    }
+
+    /**
+     * Save the assigned sales representative (admin user) onto the customer.
+     */
+    protected function saveSalesRep(Customer $customer): void
+    {
+        if (! request()->has('sales_rep_id')) {
             return;
         }
 
-        $gst = request('gst_number');
+        $repId = request('sales_rep_id');
 
-        $customer->gst_number = $gst ? strtoupper($gst) : null;
+        $customer->sales_rep_id = $repId ?: null;
         $customer->save();
     }
 }

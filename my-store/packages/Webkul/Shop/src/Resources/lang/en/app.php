@@ -147,7 +147,7 @@ return [
                     'state' => 'State',
                     'street-address' => 'Street Address',
                     'title' => 'Address',
-                    'vat-id' => 'Vat ID',
+                    'vat-id' => 'GST/VAT Number',
                 ],
 
                 'edit' => [
@@ -165,7 +165,7 @@ return [
                     'street-address' => 'Street Address',
                     'title' => 'Address',
                     'update-btn' => 'Update',
-                    'vat-id' => 'Vat ID',
+                    'vat-id' => 'GST/VAT Number',
                 ],
             ],
 
@@ -452,7 +452,7 @@ return [
                         'postcode' => 'Postcode',
                         'state' => 'State',
                         'title' => 'Address Information',
-                        'vat-id' => 'Vat ID',
+                        'vat-id' => 'GST/VAT Number',
                     ],
 
                     'order-info' => [
@@ -1078,7 +1078,7 @@ return [
                 'street-address' => 'Street Address',
                 'telephone' => 'Telephone',
                 'title' => 'Address',
-                'vat-id' => 'Vat ID',
+                'vat-id' => 'GST/VAT Number',
             ],
 
             'index' => [
