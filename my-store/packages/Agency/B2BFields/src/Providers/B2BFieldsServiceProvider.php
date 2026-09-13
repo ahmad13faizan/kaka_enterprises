@@ -2,19 +2,25 @@
 
 namespace Agency\B2BFields\Providers;
 
+use Illuminate\Auth\Events\Login;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Validation\ValidationException;
 use Webkul\Customer\Models\Customer;
+use Agency\B2BFields\Support\IdProof;
 
 class B2BFieldsServiceProvider extends ServiceProvider
 {
     /**
      * Indian GSTIN format: 2 digit state code + 10 char PAN + entity digit + 'Z' + checksum.
      * Example: 22AAAAA0000A1Z5
+     *
+     * Sourced from the shared IdProof support class so the admin GST field and the
+     * storefront id_proof (GST) validation share a single source of truth.
      */
-    private const GST_REGEX = '/^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/';
+    private const GST_REGEX = IdProof::GSTIN_PATTERN;
 
     public function boot(): void
     {
@@ -23,6 +29,41 @@ class B2BFieldsServiceProvider extends ServiceProvider
 
         $this->registerViewHooks();
         $this->registerSaveHooks();
+        $this->registerGuestCheckoutEnforcement();
+    }
+
+    /**
+     * Force guest checkout OFF whenever an admin logs in.
+     *
+     * Every order must belong to a registered, identifiable customer (needed for
+     * clean GST / refund records). This resets the setting on each admin login so
+     * it can never be silently left enabled.
+     */
+    protected function registerGuestCheckoutEnforcement(): void
+    {
+        Event::listen(Login::class, function (Login $event) {
+            if ($event->guard !== 'admin') {
+                return;
+            }
+
+            $code = 'sales.checkout.shopping_cart.allow_guest_checkout';
+
+            $exists = DB::table('core_config')->where('code', $code)->exists();
+
+            if ($exists) {
+                DB::table('core_config')->where('code', $code)->update([
+                    'value'      => '0',
+                    'updated_at' => now(),
+                ]);
+            } else {
+                DB::table('core_config')->insert([
+                    'code'       => $code,
+                    'value'      => '0',
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]);
+            }
+        });
     }
 
     /**

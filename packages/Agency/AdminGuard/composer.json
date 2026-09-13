@@ -1,0 +1,19 @@
+{
+  "name": "agency/admin-guard",
+  "description": "Restricts Bagisto admin panel access to an allow-list of client IP addresses",
+  "type": "bagisto-package",
+  "license": "MIT",
+  "require": {},
+  "autoload": {
+    "psr-4": {
+      "Agency\\AdminGuard\\": "src/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Agency\\AdminGuard\\Providers\\AdminGuardServiceProvider"
+      ]
+    }
+  }
+}

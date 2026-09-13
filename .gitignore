@@ -81,3 +81,9 @@ yarn-error.log
 # ==========================================================================
 rzp-key.csv
 
+
+# --- Secrets / local artifacts (never commit) ---
+secrets/
+G-Auth-client_secret_*.json
+*.apps.googleusercontent.com.json
+bagisto.sql
