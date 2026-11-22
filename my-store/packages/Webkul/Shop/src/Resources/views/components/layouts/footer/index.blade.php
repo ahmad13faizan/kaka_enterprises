@@ -38,8 +38,13 @@
                         @endphp
 
                         @foreach ($footerLinkSection as $link)
+                            @php
+                                $linkHost = parse_url($link['url'], PHP_URL_HOST);
+                                $isInternal = in_array($linkHost, ['localhost', '127.0.0.1', parse_url(config('app.url'), PHP_URL_HOST)]);
+                                $href = $isInternal ? url(parse_url($link['url'], PHP_URL_PATH)) : $link['url'];
+                            @endphp
                             <li>
-                                <a href="{{ $link['url'] }}">
+                                <a href="{{ $href }}">
                                     {{ $link['title'] }}
                                 </a>
                             </li>
@@ -72,9 +77,14 @@
                             @endphp
 
                             @foreach ($footerLinkSection as $link)
+                                @php
+                                    $linkHost = parse_url($link['url'], PHP_URL_HOST);
+                                    $isInternal = in_array($linkHost, ['localhost', '127.0.0.1', parse_url(config('app.url'), PHP_URL_HOST)]);
+                                    $href = $isInternal ? url(parse_url($link['url'], PHP_URL_PATH)) : $link['url'];
+                                @endphp
                                 <li>
                                     <a
-                                        href="{{ $link['url'] }}"
+                                        href="{{ $href }}"
                                         class="text-sm font-medium max-sm:text-xs"
                                     >
                                         {{ $link['title'] }}
